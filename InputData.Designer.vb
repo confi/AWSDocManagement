@@ -44,7 +44,7 @@ Partial Class InputData
         Me.MoveFile = New System.Windows.Forms.Button
         Me.Status = New System.Windows.Forms.Label
         Me.NextFile = New System.Windows.Forms.Button
-        Me.Button1 = New System.Windows.Forms.Button
+        Me.OpenFile = New System.Windows.Forms.Button
         Me.DeleteFolder = New System.Windows.Forms.Button
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
         Me.GroupBox1.SuspendLayout()
@@ -262,14 +262,14 @@ Partial Class InputData
         Me.NextFile.Text = ">>下一文件"
         Me.NextFile.UseVisualStyleBackColor = True
         '
-        'Button1
+        'OpenFile
         '
-        Me.Button1.Location = New System.Drawing.Point(14, 365)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(85, 23)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "打开文件"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.OpenFile.Location = New System.Drawing.Point(14, 365)
+        Me.OpenFile.Name = "OpenFile"
+        Me.OpenFile.Size = New System.Drawing.Size(85, 23)
+        Me.OpenFile.TabIndex = 6
+        Me.OpenFile.Text = "打开文件"
+        Me.OpenFile.UseVisualStyleBackColor = True
         '
         'DeleteFolder
         '
@@ -298,7 +298,7 @@ Partial Class InputData
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.Status)
         Me.Controls.Add(Me.NextFile)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.OpenFile)
         Me.Controls.Add(Me.DeleteFolder)
         Me.Controls.Add(Me.MoveFile)
         Me.Controls.Add(Me.Append)
@@ -344,7 +344,7 @@ Partial Class InputData
     Friend WithEvents MoveFile As System.Windows.Forms.Button
     Friend WithEvents Status As System.Windows.Forms.Label
     Friend WithEvents NextFile As System.Windows.Forms.Button
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents OpenFile As System.Windows.Forms.Button
     Friend WithEvents DeleteFolder As System.Windows.Forms.Button
     Friend WithEvents CheckBox9 As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
