@@ -7,17 +7,20 @@ Public Class InputData
     Private fullName As String = ""
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.Visible = False
+        'Me.Visible = False
         Dim folder As New FolderBrowserDialog
         folder.Description = "请选择开始整理的文件夹根目录..."
         folder.ShowNewFolderButton = False
         folder.ShowDialog()
         Me.Visible = True
+
         Dim fileName As String = folder.SelectedPath
         DocInfo.ForeColor = Color.Black
-        searchFolder(fileName)
-
+        If fileName <> "" Then searchFolder(fileName)
+        Me.Close()
     End Sub
+
+    
 
     '选择文件夹，遍历文件夹。
     Private Sub searchFolder(ByVal folderPath As String)
@@ -36,24 +39,25 @@ Public Class InputData
                         path = path & fullName.Split("\")(i) & "\"
                     Next
                     fileName = fullName.Split("\")(sectionNo)
-                    DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & path & vbCrLf
+                    DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & path & vbLf
                     Do While nextKeyPressed
                         Application.DoEvents()
+                        If Me.Disposing Then Exit Sub
                     Loop
                     nextKeyPressed = True
                 Next
             End If
 
 
-            ''递归调用，处理当前文件夹下子文件夹
-            'If Directory.GetDirectories(folderPath).Length > 0 Then
-            '    Dim subDirectories() As String = Directory.GetDirectories(folderPath)
+            '递归调用，处理当前文件夹下子文件夹
+            If Directory.GetDirectories(folderPath).Length > 0 Then
+                Dim subDirectories() As String = Directory.GetDirectories(folderPath)
 
-            '    For Each subDirectory As String In subDirectories
-            '        searchFolder(subDirectory)
-            '    Next
+                For Each subDirectory As String In subDirectories
+                    searchFolder(subDirectory)
+                Next
 
-            'End If
+            End If
 
         End If
 
@@ -84,4 +88,7 @@ Public Class InputData
                 MsgBox("打开文件超时，请检查网络连接！", MsgBoxStyle.Exclamation, AcceptButton)
         End Select
     End Sub
+
+
+
 End Class

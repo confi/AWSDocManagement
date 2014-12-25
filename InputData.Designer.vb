@@ -58,9 +58,10 @@ Partial Class InputData
         Me.DocInfo.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DocInfo.ForeColor = System.Drawing.SystemColors.InactiveCaption
         Me.DocInfo.Location = New System.Drawing.Point(6, 17)
-        Me.DocInfo.MaximumSize = New System.Drawing.Size(300, 36)
+        Me.DocInfo.MaximumSize = New System.Drawing.Size(280, 110)
+        Me.DocInfo.MinimumSize = New System.Drawing.Size(0, 110)
         Me.DocInfo.Name = "DocInfo"
-        Me.DocInfo.Size = New System.Drawing.Size(15, 14)
+        Me.DocInfo.Size = New System.Drawing.Size(15, 110)
         Me.DocInfo.TabIndex = 0
         Me.DocInfo.Text = "--"
         '
@@ -312,6 +313,7 @@ Partial Class InputData
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(320, 455)
         Me.Name = "InputData"
         Me.Text = "Input information"
         Me.GroupBox1.ResumeLayout(False)
