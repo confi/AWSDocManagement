@@ -5,6 +5,14 @@ Public Class InputData
 
     Private nextKeyPressed As Boolean = True
     Private fullName As String = ""
+    Private thisClose As Boolean = False
+
+    Private Sub InputData_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        thisClose = True
+        nextKeyPressed = False
+    End Sub
+
+
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Me.Visible = False
@@ -18,9 +26,10 @@ Public Class InputData
         DocInfo.ForeColor = Color.Black
         If fileName <> "" Then searchFolder(fileName)
         Me.Close()
+
     End Sub
 
-    
+
 
     '选择文件夹，遍历文件夹。
     Private Sub searchFolder(ByVal folderPath As String)
@@ -42,9 +51,14 @@ Public Class InputData
                     DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & path & vbLf
                     Do While nextKeyPressed
                         Application.DoEvents()
-                        If Me.Disposing Then Exit Sub
+
                     Loop
                     nextKeyPressed = True
+                    If thisClose Then
+                        Me.Dispose()
+                        End
+                    End If
+
                 Next
             End If
 
