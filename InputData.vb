@@ -105,4 +105,8 @@ Public Class InputData
 
 
 
+    Private Sub MoveFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MoveFile.Click
+        Dim con As New LANConnect
+        con.ping("192.168.0.1")
+    End Sub
 End Class
