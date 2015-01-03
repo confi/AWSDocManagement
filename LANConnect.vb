@@ -1,4 +1,7 @@
-﻿Public Class LANConnect
+﻿Imports System
+Imports System.IO
+
+Public Class LANConnect
     Public Function ping(ByVal remoteHost As String) As Boolean
         Dim flag As Boolean = False
         Dim proc As New Process
@@ -72,4 +75,33 @@
         Return flag
     End Function
 
+
+    Public Function remoteMan() As String
+
+        Dim conn As New ConnectionOptions
+        'conn.Username = "DBuser"
+        'conn.Password = "DBuser"
+        'conn.Authority = "ntlmdomain:WORKGROUP"
+        'conn.Authentication = AuthenticationLevel.Packet
+        'conn.Impersonation = ImpersonationLevel.Impersonate
+        Dim ms As New Management.ManagementScope("\\XP-PROG")
+        'ms.Options = conn
+        Dim filename As String = ""
+        Try
+            ms.Connect()
+        
+            Dim di As New DirectoryInfo("\\XP-PROG\testdb")
+            Dim sb As New Text.StringBuilder
+            For Each subDIR As DirectoryInfo In di.GetDirectories()
+                sb.Append(subDIR.Name + vbCrLf)
+            Next
+            filename = sb.ToString
+        
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+        Return filename
+
+    End Function
 End Class

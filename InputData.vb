@@ -20,11 +20,13 @@ Public Class InputData
         folder.Description = "请选择开始整理的文件夹根目录..."
         folder.ShowNewFolderButton = False
         folder.ShowDialog()
+        Me.TopMost = True
         Me.Visible = True
 
         Dim fileName As String = folder.SelectedPath
         DocInfo.ForeColor = Color.Black
         If fileName <> "" Then searchFolder(fileName)
+
         Me.Close()
 
     End Sub
@@ -34,7 +36,7 @@ Public Class InputData
     '选择文件夹，遍历文件夹。
     Private Sub searchFolder(ByVal folderPath As String)
 
-        '处理当前文件夹下的*.dwg文件
+
         Dim s As DirectorySecurity = New DirectorySecurity(folderPath, AccessControlSections.Access)
 
         If Not (s.AreAccessRulesProtected) Then
@@ -107,6 +109,7 @@ Public Class InputData
 
     Private Sub MoveFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MoveFile.Click
         Dim con As New LANConnect
-        con.ping("192.168.0.1")
+
+        DocInfo.Text = con.remoteMan()
     End Sub
 End Class
