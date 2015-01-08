@@ -76,7 +76,7 @@ Public Class LANConnect
     End Function
 
 
-    Public Function remoteMan() As String
+    Public Function remoteMan(ByVal serverName As String, ByVal serverDirectory As String) As String
 
         Dim conn As New ConnectionOptions
         'conn.Username = "DBuser"
@@ -84,19 +84,19 @@ Public Class LANConnect
         'conn.Authority = "ntlmdomain:WORKGROUP"
         'conn.Authentication = AuthenticationLevel.Packet
         'conn.Impersonation = ImpersonationLevel.Impersonate
-        Dim ms As New Management.ManagementScope("\\XP-PROG")
+        Dim ms As New Management.ManagementScope(serverName)
         'ms.Options = conn
         Dim filename As String = ""
         Try
             ms.Connect()
-        
-            Dim di As New DirectoryInfo("\\XP-PROG\testdb")
+
+            Dim di As New DirectoryInfo(serverDirectory)
             Dim sb As New Text.StringBuilder
             For Each subDIR As DirectoryInfo In di.GetDirectories()
                 sb.Append(subDIR.Name + vbCrLf)
             Next
             filename = sb.ToString
-        
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

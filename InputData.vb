@@ -15,19 +15,7 @@ Public Class InputData
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'Me.Visible = False
-        Dim folder As New FolderBrowserDialog
-        folder.Description = "请选择开始整理的文件夹根目录..."
-        folder.ShowNewFolderButton = False
-        folder.ShowDialog()
-        Me.TopMost = True
-        Me.Visible = True
 
-        Dim fileName As String = folder.SelectedPath
-        DocInfo.ForeColor = Color.Black
-        If fileName <> "" Then searchFolder(fileName)
-
-        Me.Close()
 
     End Sub
 
@@ -36,21 +24,21 @@ Public Class InputData
     '选择文件夹，遍历文件夹。
     Private Sub searchFolder(ByVal folderPath As String)
 
-
         Dim s As DirectorySecurity = New DirectorySecurity(folderPath, AccessControlSections.Access)
 
         If Not (s.AreAccessRulesProtected) Then
             If Directory.GetFiles(folderPath).Length > 0 Then
+                
                 Dim fileNames As String() = Directory.GetFiles(folderPath)
                 For Each Me.fullName In fileNames
-                    Dim sectionNo As Integer = fullName.Split("\").Length - 1
-                    Dim path As String = ""
+
+                    Dim filePath As String = ""
                     Dim fileName As String = ""
-                    For i As Integer = 0 To fullName.Split("\").Length - 2
-                        path = path & fullName.Split("\")(i) & "\"
-                    Next
-                    fileName = fullName.Split("\")(sectionNo)
-                    DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & path & vbLf
+                   
+                    fileName = Path.GetFileName(fullName)
+                    filePath = Path.GetDirectoryName(fullName)
+
+                    DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & filePath & vbLf
                     Do While nextKeyPressed
                         Application.DoEvents()
 
@@ -92,24 +80,51 @@ Public Class InputData
 
 
 
-    Private Sub OpenFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles OpenFile.Click
+    Private Sub OpenFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnOpenFile.Click
+        subOpenFile(fullName)
+    End Sub
+
+    Private Sub subOpenFile(ByVal fileName As String)
         Dim openStatus As Long
-        openStatus = ShellExecute(Me.Handle, "open", fullName, "", "", 1)
+        openStatus = ShellExecute(Me.Handle, "open", fileName, "", "", 1)
+        Me.Status.Text = "正在打开文件……"
         Select Case openStatus
+            Case Is > 32
+                Me.Status.Text = "就绪"
             Case 26
                 MsgBox("共享错误，请检查文件权限设置！", MsgBoxStyle.Exclamation, AcceptButton)
             Case 31
                 MsgBox("没有关联的应用程序，请检查文件的扩展名！", MsgBoxStyle.Exclamation, AcceptButton)
             Case 28
                 MsgBox("打开文件超时，请检查网络连接！", MsgBoxStyle.Exclamation, AcceptButton)
+
         End Select
+
     End Sub
 
+    Private Sub MoveFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMoveFile.Click
+
+        Dim folder As New FolderBrowserDialog
+        folder.Description = "请选择目标文件夹......"
+        folder.ShowNewFolderButton = True
 
 
-    Private Sub MoveFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MoveFile.Click
-        Dim con As New LANConnect
+    End Sub
 
-        DocInfo.Text = con.remoteMan()
+    Private Sub moveFile(ByVal currentFolder As String, ByVal moveToFolder As String)
+
+    End Sub
+
+    Private Sub btnScan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnScan.Click
+        Dim folder As New FolderBrowserDialog
+        folder.Description = "请选择开始整理的文件夹根目录..."
+        folder.ShowNewFolderButton = False
+        'folder.SelectedPath = "\\adserver\技术服务部文件"
+        folder.ShowDialog()
+        Dim fileName As String = folder.SelectedPath
+        DocInfo.ForeColor = Color.Black
+        If fileName <> "" Then searchFolder(fileName)
+
+
     End Sub
 End Class

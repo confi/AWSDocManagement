@@ -41,12 +41,13 @@ Partial Class InputData
         Me.ComboBox2 = New System.Windows.Forms.ComboBox
         Me.AddKeyWords = New System.Windows.Forms.Button
         Me.Append = New System.Windows.Forms.Button
-        Me.MoveFile = New System.Windows.Forms.Button
+        Me.btnMoveFile = New System.Windows.Forms.Button
         Me.Status = New System.Windows.Forms.Label
         Me.NextFile = New System.Windows.Forms.Button
-        Me.OpenFile = New System.Windows.Forms.Button
+        Me.btnOpenFile = New System.Windows.Forms.Button
         Me.DeleteFolder = New System.Windows.Forms.Button
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
+        Me.btnScan = New System.Windows.Forms.Button
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -236,14 +237,14 @@ Partial Class InputData
         Me.Append.Text = "加入数据库"
         Me.Append.UseVisualStyleBackColor = True
         '
-        'MoveFile
+        'btnMoveFile
         '
-        Me.MoveFile.Location = New System.Drawing.Point(115, 337)
-        Me.MoveFile.Name = "MoveFile"
-        Me.MoveFile.Size = New System.Drawing.Size(85, 23)
-        Me.MoveFile.TabIndex = 6
-        Me.MoveFile.Text = "移动文件"
-        Me.MoveFile.UseVisualStyleBackColor = True
+        Me.btnMoveFile.Location = New System.Drawing.Point(115, 337)
+        Me.btnMoveFile.Name = "btnMoveFile"
+        Me.btnMoveFile.Size = New System.Drawing.Size(85, 23)
+        Me.btnMoveFile.TabIndex = 6
+        Me.btnMoveFile.Text = "移动文件"
+        Me.btnMoveFile.UseVisualStyleBackColor = True
         '
         'Status
         '
@@ -263,14 +264,14 @@ Partial Class InputData
         Me.NextFile.Text = ">>下一文件"
         Me.NextFile.UseVisualStyleBackColor = True
         '
-        'OpenFile
+        'btnOpenFile
         '
-        Me.OpenFile.Location = New System.Drawing.Point(14, 365)
-        Me.OpenFile.Name = "OpenFile"
-        Me.OpenFile.Size = New System.Drawing.Size(85, 23)
-        Me.OpenFile.TabIndex = 6
-        Me.OpenFile.Text = "打开文件"
-        Me.OpenFile.UseVisualStyleBackColor = True
+        Me.btnOpenFile.Location = New System.Drawing.Point(14, 365)
+        Me.btnOpenFile.Name = "btnOpenFile"
+        Me.btnOpenFile.Size = New System.Drawing.Size(85, 23)
+        Me.btnOpenFile.TabIndex = 6
+        Me.btnOpenFile.Text = "打开文件"
+        Me.btnOpenFile.UseVisualStyleBackColor = True
         '
         'DeleteFolder
         '
@@ -291,6 +292,15 @@ Partial Class InputData
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "文件信息"
         '
+        'btnScan
+        '
+        Me.btnScan.Location = New System.Drawing.Point(14, 305)
+        Me.btnScan.Name = "btnScan"
+        Me.btnScan.Size = New System.Drawing.Size(85, 23)
+        Me.btnScan.TabIndex = 6
+        Me.btnScan.Text = "扫描文件夹"
+        Me.btnScan.UseVisualStyleBackColor = True
+        '
         'InputData
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -299,9 +309,10 @@ Partial Class InputData
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.Status)
         Me.Controls.Add(Me.NextFile)
-        Me.Controls.Add(Me.OpenFile)
+        Me.Controls.Add(Me.btnOpenFile)
         Me.Controls.Add(Me.DeleteFolder)
-        Me.Controls.Add(Me.MoveFile)
+        Me.Controls.Add(Me.btnMoveFile)
+        Me.Controls.Add(Me.btnScan)
         Me.Controls.Add(Me.Append)
         Me.Controls.Add(Me.AddKeyWords)
         Me.Controls.Add(Me.ComboBox2)
@@ -343,12 +354,13 @@ Partial Class InputData
     Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Friend WithEvents AddKeyWords As System.Windows.Forms.Button
     Friend WithEvents Append As System.Windows.Forms.Button
-    Friend WithEvents MoveFile As System.Windows.Forms.Button
+    Friend WithEvents btnMoveFile As System.Windows.Forms.Button
     Friend WithEvents Status As System.Windows.Forms.Label
     Friend WithEvents NextFile As System.Windows.Forms.Button
-    Friend WithEvents OpenFile As System.Windows.Forms.Button
+    Friend WithEvents btnOpenFile As System.Windows.Forms.Button
     Friend WithEvents DeleteFolder As System.Windows.Forms.Button
     Friend WithEvents CheckBox9 As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents btnScan As System.Windows.Forms.Button
 
 End Class
