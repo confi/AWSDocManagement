@@ -7,66 +7,12 @@ Public Class InputData
     Private fullName As String = ""
     Private thisClose As Boolean = False
 
+    Private intTotalFile As Integer = 0
+
     Private Sub InputData_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         thisClose = True
         nextKeyPressed = False
     End Sub
-
-
-
-    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-
-    End Sub
-
-
-
-    '选择文件夹，遍历文件夹。
-    Private Sub searchFolder(ByVal folderPath As String)
-
-        Dim s As DirectorySecurity = New DirectorySecurity(folderPath, AccessControlSections.Access)
-
-        If Not (s.AreAccessRulesProtected) Then
-            If Directory.GetFiles(folderPath).Length > 0 Then
-                
-                Dim fileNames As String() = Directory.GetFiles(folderPath)
-                For Each Me.fullName In fileNames
-
-                    Dim filePath As String = ""
-                    Dim fileName As String = ""
-                   
-                    fileName = Path.GetFileName(fullName)
-                    filePath = Path.GetDirectoryName(fullName)
-
-                    DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & filePath & vbLf
-                    Do While nextKeyPressed
-                        Application.DoEvents()
-
-                    Loop
-                    nextKeyPressed = True
-                    If thisClose Then
-                        Me.Dispose()
-                        End
-                    End If
-
-                Next
-            End If
-
-
-            '递归调用，处理当前文件夹下子文件夹
-            If Directory.GetDirectories(folderPath).Length > 0 Then
-                Dim subDirectories() As String = Directory.GetDirectories(folderPath)
-
-                For Each subDirectory As String In subDirectories
-                    searchFolder(subDirectory)
-                Next
-
-            End If
-
-        End If
-
-    End Sub
-
 
 
     Private Sub NextFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles NextFile.Click
@@ -123,8 +69,94 @@ Public Class InputData
         folder.ShowDialog()
         Dim fileName As String = folder.SelectedPath
         DocInfo.ForeColor = Color.Black
-        If fileName <> "" Then searchFolder(fileName)
+        If fileName <> "" Then
+            intTotalFile = 0
+            Dim PGBFileScanned As New Progress
+            PGBFileScanned.Show()
+            Application.DoEvents()
+            countFiles(fileName)
+            With PGBFileScanned
+                .LblCountFiles.Text = "0/" & intTotalFile.ToString
+                .PGBFile.Maximum = intTotalFile
+            End With
+            scannedIntoDatabase(fileName, PGBFileScanned)
+
+        End If
+
 
 
     End Sub
+
+    Private Sub countFiles(ByVal folderPath As String)
+        Dim s As DirectorySecurity = New DirectorySecurity(folderPath, AccessControlSections.Access)
+        If Not (s.AreAccessRulesProtected) Then
+
+            intTotalFile += Directory.GetFiles(folderPath).Length
+            If Directory.GetDirectories(folderPath).Length > 0 Then
+                Dim subDirectories() As String = Directory.GetDirectories(folderPath)
+
+                For Each subDirectory As String In subDirectories
+                    countFiles(subDirectory)
+                Next
+
+            End If
+
+
+        End If
+    End Sub
+
+    Private Sub scannedIntoDatabase(ByVal folderPath As String, ByVal progressBar As Progress)
+
+        Dim s As DirectorySecurity = New DirectorySecurity(folderPath, AccessControlSections.Access)
+
+
+        If Not (s.AreAccessRulesProtected) Then
+
+            If Directory.GetFiles(folderPath).Length > 0 Then
+
+
+                Dim fileNames As String() = Directory.GetFiles(folderPath)
+                For Each Me.fullName In fileNames
+
+                    Dim filePath As String = ""
+                    Dim fileName As String = ""
+
+                    fileName = Path.GetFileName(fullName)
+                    filePath = Path.GetDirectoryName(fullName)
+                    '写入数据库
+
+                    progressBar.ScanedOneFile()
+                    progressBar.LblFileName.Text = fullName
+                    Application.DoEvents()
+
+                    'DocInfo.Text = "文件名:   " & fileName & vbCrLf & "文件夹:   " & filePath & vbLf
+                    'Do While nextKeyPressed
+                    '    Application.DoEvents()
+
+                    'Loop
+                    'nextKeyPressed = True
+                    'If thisClose Then
+                    '    Me.Dispose()
+                    '    End
+                    'End If
+
+                Next
+
+            End If
+
+            '递归调用，处理当前文件夹下子文件夹
+            If Directory.GetDirectories(folderPath).Length > 0 Then
+                Dim subDirectories() As String = Directory.GetDirectories(folderPath)
+
+                For Each subDirectory As String In subDirectories
+                    scannedIntoDatabase(subDirectory, progressBar)
+                Next
+
+            End If
+
+
+        End If
+
+    End Sub
+
 End Class
